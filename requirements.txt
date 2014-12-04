@@ -1,0 +1,8 @@
+Scrapy==0.24.4
+html2text==2014.9.25
+ipdb==0.8
+pyasn1==0.1.7
+redis==2.10.3
+scrapy-redis==0.5.2
+service-identity==14.0.0
+tldextract==1.5.1
