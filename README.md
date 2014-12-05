@@ -1,4 +1,4 @@
-# digbot
+# digbot-webcrawler
 
 Web crawler
 
