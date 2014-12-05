@@ -4,7 +4,7 @@ Web crawler
 
 # Requirements
 
-* Python (2.7)
+* [Python (2.7)
 * Scrapy (0.24.4)
 * scrapy-redis (0.5.2)
 * html2text (2014.9.25)

@@ -23,15 +23,16 @@ class DigSpider(RedisSpider):
         tld_links = [link.url for link in refer_links if self.is_domestic(link.url)]
 
         item = PageItem()
-        item['title'] = hxs.xpath('/html/head/title/text()').extract()[0]
+        try:
+            item['title'] = hxs.xpath('/html/head/title/text()').extract()[0]
+        except:
+            item['title'] = tldextract.extract(response.url).registered_domain
         # item['content'] = html2text.html2text(response.body.decode('utf8'))
         yield item
 
-        filtered_links = []
         r = redis.Redis(connection_pool=self.pool)
 
         for link in tld_links:
             if not r.sismember('visited_urls', link):
                 r.sadd('visited_urls', link)
-                filtered_links.append(link)
                 yield scrapy.http.Request(url=link, callback=self.parse)
