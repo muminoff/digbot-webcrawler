@@ -7,3 +7,4 @@ scrapy-redis==0.5.2
 service-identity==14.0.0
 tldextract==1.5.1
 psycopg2==2.5.4
+sqlparse==0.1.14
