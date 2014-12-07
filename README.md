@@ -7,7 +7,6 @@ Web crawler
 * Python (2.7)
 * Scrapy (0.24.4)
 * scrapy-redis (0.5.2)
-* html2text (2014.9.25)
 * redis (2.10.3)
 * tldextract (1.5.1)
 
