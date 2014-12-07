@@ -9,6 +9,7 @@ Web crawler
 * scrapy-redis (0.5.2)
 * redis (2.10.3)
 * tldextract (1.5.1)
+* psycopg2 (2.5.4)
 
 
 # License
