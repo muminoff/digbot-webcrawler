@@ -30,10 +30,23 @@ class DigSpider(RedisSpider):
         tld_links = [link.url for link in refer_links if self.is_domestic(link.url)]
 
         item = PageItem()
+
         try:
             item['title'] = hxs.xpath('/html/head/title/text()').extract()[0].strip()
         except:
             item['title'] = tldextract.extract(response.url).registered_domain
+        
+        try:
+            item['content'] = response.body
+        except:
+            item['content'] = response.body_as_unicode()
+
+        # FIXME if failure consider following options in try mode
+        # response._body_inferred_encoding()
+        # response._body_declared_encoding()
+        # response._headers_encoding()
+        item['charset'] = response.encoding
+
         yield item
 
         r = redis.Redis(connection_pool=self.pool)

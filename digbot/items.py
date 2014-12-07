@@ -5,4 +5,5 @@ import scrapy
 
 class PageItem(scrapy.Item):
     title = scrapy.Field()
-    # content = scrapy.Field()
+    charset = scrapy.Field()
+    content = scrapy.Field()
