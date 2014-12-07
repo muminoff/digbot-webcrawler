@@ -7,6 +7,7 @@ NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
 LOG_LEVEL = 'DEBUG'
+LOG_FILE = './log/digspider.log'
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
