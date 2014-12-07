@@ -31,7 +31,7 @@ class DigSpider(RedisSpider):
 
         item = PageItem()
         try:
-            item['title'] = hxs.xpath('/html/head/title/text()').extract()[0]
+            item['title'] = hxs.xpath('/html/head/title/text()').extract()[0].strip()
         except:
             item['title'] = tldextract.extract(response.url).registered_domain
         yield item
