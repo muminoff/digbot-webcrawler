@@ -6,3 +6,4 @@ redis==2.10.3
 scrapy-redis==0.5.2
 service-identity==14.0.0
 tldextract==1.5.1
+psycopg2==2.5.4
