@@ -2,13 +2,13 @@
 from scrapy_redis.spiders import RedisSpider
 from scrapy.utils.markup import remove_tags, remove_tags_with_content
 from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from digbot.items import PageItem
 import scrapy
 import tldextract
 import redis
-from digbot.items import PageItem
 
 
-class DigSpider(RedisSpider):
+class DigbotSpider(RedisSpider):
     name = 'digspider'
     link_extractor = SgmlLinkExtractor()
     pool = redis.ConnectionPool(host='localhost', port=6379, db=0)

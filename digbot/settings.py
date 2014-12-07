@@ -16,6 +16,7 @@ SCHEDULER_IDLE_BEFORE_CLOSE = 10
 
 ITEM_PIPELINES = [
         'scrapy_redis.pipelines.RedisPipeline',
+        'digbot.pipelines.DigbotPipeline',
         ]
 
 REDIS_HOST = 'localhost'
