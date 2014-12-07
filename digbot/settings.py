@@ -9,10 +9,15 @@ USER_AGENT = 'DigBot'
 LOG_LEVEL = 'DEBUG'
 LOG_FILE = './log/digspider.log'
 
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# Broad crawler settings recommendation from scrapy authors
+CONCURRENT_REQUESTS = 100
+COOKIES_ENABLED = False
+DOWNLOAD_TIMEOUT = 15
+REDIRECT_ENABLED = False
+AJAXCRAWL_ENABLED = True
 
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
-
+SCHEDULER = "scrapy_redis.scheduler.Scheduler" 
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue' 
 SCHEDULER_IDLE_BEFORE_CLOSE = 10
 
 ITEM_PIPELINES = [
