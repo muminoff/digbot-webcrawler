@@ -15,12 +15,13 @@ CHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
 SCHEDULER_IDLE_BEFORE_CLOSE = 10
 
 ITEM_PIPELINES = [
-        'scrapy_redis.pipelines.RedisPipeline',
-        'digbot.pipelines.DigbotPipeline',
-        ]
+    'scrapy_redis.pipelines.RedisPipeline',
+    'digbot.pipelines.DigbotPipeline',
+]
 
 REDIS_HOST = 'localhost'
 REDIS_PORT = 6379
+REDIS_DB = 0
 
 DATABASE = {
     'drivername': 'postgres',
