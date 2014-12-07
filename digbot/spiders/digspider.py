@@ -19,7 +19,10 @@ class DigSpider(RedisSpider):
     def is_domain_in_white_list(self, url):
         r = redis.Redis(connection_pool=self.pool)
         domain = tldextract.extract(url).registered_domain
-        return r.sismember('domain_whitelist', domain)
+        return r.sismember(self.name + ':domain_whitelist', domain)
+
+    def get_domain(self, url):
+        return tldextract.extract(url).registered_domain
 
     def parse(self, response):
         hxs = scrapy.Selector(response)
@@ -34,12 +37,19 @@ class DigSpider(RedisSpider):
         yield item
 
         r = redis.Redis(connection_pool=self.pool)
+        visited_urls = self.name + ':visited_urls'
+        new_domains = self.name + ':new_domains'
 
         for link in tld_links:
-            if not r.sismember('visited_urls', link):
+            if not r.sismember(visited_urls, link):
                 if self.is_domain_in_white_list(link):
                     scrapy.log.msg('Following link {}'.format(link))
-                    r.sadd('visited_urls', link)
+                    r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
                     scrapy.log.msg('Domain not in white list {}'.format(link))
+                    if not r.sismember(new_domains, self.get_domain(link)):
+                        r.sadd(new_domains, self.get_domain(link))
+                        scrapy.log.msg('Found new domain {}'.format(self.get_domain(link)))
+            else:
+                scrapy.log.msg('Already visited {}'.format(link))
