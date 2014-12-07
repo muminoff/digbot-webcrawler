@@ -19,7 +19,7 @@ class Page(DeclarativeBase):
 
     id = Column(Integer, primary_key=True)
     url = Column('url', String, nullable=False)
-    title = Column('title', String, primary_key=True)
+    title = Column('title', String, nullable=False)
     charset = Column('charset', String, nullable=True)
     content = Column('content', Text)
     last_crawled = Column('last_crawled', DateTime)

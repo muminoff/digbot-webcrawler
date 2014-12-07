@@ -6,7 +6,7 @@ SPIDER_MODULES = ['digbot.spiders']
 NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
-LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'DEBUG'
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 

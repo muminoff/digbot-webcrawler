@@ -12,6 +12,7 @@ class DigbotPipeline(object):
     def process_item(self, item, spider):
         session = self.Session()
         page = Page()
+        page.url = item['url']
         page.title = item['title']
         page.charset = item['charset']
         page.content = item['content']
