@@ -30,6 +30,7 @@ class DigbotSpider(RedisSpider):
         tld_links = [link.url for link in refer_links if self.is_domestic(link.url)]
 
         item = PageItem()
+        item['charset'] = response.url
 
         try:
             item['title'] = hxs.xpath('/html/head/title/text()').extract()[0].strip()

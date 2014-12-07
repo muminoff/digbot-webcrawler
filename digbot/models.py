@@ -18,6 +18,7 @@ class Page(DeclarativeBase):
     __tablename__ = "pages"
 
     id = Column(Integer, primary_key=True)
+    url = Column('url', String, nullable=False)
     title = Column('title', String, primary_key=True)
     charset = Column('charset', String, nullable=True)
     content = Column('content', Text)
