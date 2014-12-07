@@ -31,3 +31,6 @@ class Domain(DeclarativeBase):
 
     fqdn = Column('title', String, primary_key=True)
     ip_address = Column('ip_address', String, nullable=False)
+    tasix_member = Column('tasix_member', Boolean, unique=False, default=False)
+    last_crawled = Column('last_crawled', DateTime)
+    spider = Column('spider', String)

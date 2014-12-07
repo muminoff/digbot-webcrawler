@@ -10,7 +10,7 @@ LOG_LEVEL = 'DEBUG'
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
-CHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
 
 SCHEDULER_IDLE_BEFORE_CLOSE = 10
 

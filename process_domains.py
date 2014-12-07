@@ -5,7 +5,12 @@ import redis
 
 
 def main():
-    r = redis.Redis()
+    pool = redis.ConnectionPool(
+        host=settings.REDIS_HOST,
+        port=settings.REDIS_PORT,
+        db=settings.REDIS_DB
+    )
+    r = redis.Redis(connection_pool=self.pool)
     while True:
         item = r.spop("digspider:new_domains")
         try:
