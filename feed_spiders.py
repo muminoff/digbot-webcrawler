@@ -3,6 +3,7 @@
 import time
 import redis
 import sys
+from digbot import settings
 
 
 def main():
