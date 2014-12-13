@@ -58,10 +58,10 @@ class DigbotSpider(RedisSpider):
         yield item
 
         r = redis.Redis(connection_pool=self.pool)
-        visited_urls = self.name + ':visited_urls'
         new_domains = self.name + ':new_domains'
 
         for link in tld_links:
+            visited_urls = '{}:{}:visited_urls'.format(self.name, self.get_domain(link))
             if not r.sismember(visited_urls, link):
                 if self.is_domain_in_white_list(link):
                     scrapy.log.msg('Following link {}'.format(link))

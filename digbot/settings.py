@@ -6,13 +6,13 @@ SPIDER_MODULES = ['digbot.spiders']
 NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
-LOG_LEVEL = 'DEBUG'
+LOG_LEVEL = 'INFO'
 LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
-CONCURRENT_REQUESTS = 100
+# CONCURRENT_REQUESTS = 100
 COOKIES_ENABLED = False
-DOWNLOAD_TIMEOUT = 15
+# DOWNLOAD_TIMEOUT = 15
 REDIRECT_ENABLED = False
 AJAXCRAWL_ENABLED = True
 
@@ -25,15 +25,15 @@ ITEM_PIPELINES = [
     'digbot.pipelines.DigbotPipeline',
 ]
 
-REDIS_HOST = 'localhost'
+REDIS_HOST = '54.165.52.4'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': 'localhost',
+    'host': '54.173.77.255',
     'port': '5432',
-    'username': 'muminoff',
-    'password': '',
+    'username': 'digbot',
+    'password': 'digbot',
     'database': 'digspider'
 }
