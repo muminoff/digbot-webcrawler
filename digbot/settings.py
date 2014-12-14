@@ -7,7 +7,7 @@ NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
 LOG_LEVEL = 'CRITICAL'
-LOG_FILE = './log/digspider.log'
+# LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
 CONCURRENT_REQUESTS = 512
