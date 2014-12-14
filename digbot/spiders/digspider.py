@@ -64,13 +64,13 @@ class DigbotSpider(RedisSpider):
             visited_urls = '{}:{}:visited_urls'.format(self.name, self.get_domain(link))
             if not r.sismember(visited_urls, link):
                 if self.is_domain_in_white_list(link):
-                    scrapy.log.msg('Following link {}'.format(link))
+                    scrapy.log.msg('Following link {}'.format(link), level=scrapy.log.INFO)
                     r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
-                    scrapy.log.msg('Domain not in white list {}'.format(link))
+                    scrapy.log.msg('Domain not in white list {}'.format(link), level=scrapy.log.INFO)
                     if not r.sismember(new_domains, self.get_domain(link)):
                         r.sadd(new_domains, self.get_domain(link))
-                        scrapy.log.msg('Found new domain {}'.format(self.get_domain(link)))
+                        scrapy.log.msg('Found new domain {}'.format(self.get_domain(link)), level=scrapy.log.INFO)
             else:
-                scrapy.log.msg('Already visited {}'.format(link))
+                scrapy.log.msg('Already visited {}'.format(link), level=scrapy.log.INFO)

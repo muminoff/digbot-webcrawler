@@ -6,14 +6,14 @@ SPIDER_MODULES = ['digbot.spiders']
 NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
-LOG_LEVEL = 'INFO'
+LOG_LEVEL = 'CRITICAL'
 LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
-# CONCURRENT_REQUESTS = 100
+CONCURRENT_REQUESTS = 512
 COOKIES_ENABLED = False
-# DOWNLOAD_TIMEOUT = 15
-REDIRECT_ENABLED = False
+DOWNLOAD_TIMEOUT = 30
+# REDIRECT_ENABLED = False
 AJAXCRAWL_ENABLED = True
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler" 
@@ -21,7 +21,7 @@ SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
 SCHEDULER_IDLE_BEFORE_CLOSE = 10
 
 ITEM_PIPELINES = [
-    'scrapy_redis.pipelines.RedisPipeline',
+    # 'scrapy_redis.pipelines.RedisPipeline',
     'digbot.pipelines.DigbotPipeline',
 ]
 

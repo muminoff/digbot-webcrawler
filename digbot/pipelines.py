@@ -1,6 +1,7 @@
 from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 from models import Page, db_connect, create_pages_table
+from scrapy import log
 
 
 class DigbotPipeline(object):
@@ -22,9 +23,9 @@ class DigbotPipeline(object):
         try:
             session.add(page)
             session.commit()
-        except:
+        except Exception, e:
             session.rollback()
-            raise
+            log.msg(str(e), level=log.CRITICAL)
         finally:
             session.close()
 
