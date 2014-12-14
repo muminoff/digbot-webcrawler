@@ -10,7 +10,7 @@ LOG_LEVEL = 'CRITICAL'
 # LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
-CONCURRENT_REQUESTS = 512
+CONCURRENT_REQUESTS = 16
 COOKIES_ENABLED = False
 DOWNLOAD_TIMEOUT = 30
 # REDIRECT_ENABLED = False
