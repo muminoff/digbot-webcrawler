@@ -17,7 +17,7 @@ def create_pages_table(engine):
 class Page(DeclarativeBase):
     __tablename__ = "pages"
 
-    id = Column(Integer, primary_key=True, autoincement=True)
+    id = Column(Integer, primary_key=True)
     url = Column('url', Unicode, nullable=False)
     title = Column('title', Unicode, nullable=False)
     charset = Column('charset', String, nullable=True)
