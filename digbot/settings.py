@@ -25,13 +25,14 @@ ITEM_PIPELINES = [
     'digbot.pipelines.DigbotPipeline',
 ]
 
-REDIS_HOST = '54.165.52.4'
+REDIS_HOST = '54.173.143.165'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
+
 DATABASE = {
     'drivername': 'postgres',
-    'host': '54.173.77.255',
+    'host': '54.174.240.109',
     'port': '5432',
     'username': 'digbot',
     'password': 'digbot',
