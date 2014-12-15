@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Text, Boolean, DateTime, Unicode, UnicodeText
+from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, Unicode, LargeBinary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.engine.url import URL
 import settings
@@ -21,7 +21,7 @@ class Page(DeclarativeBase):
     url = Column('url', Unicode, nullable=False)
     title = Column('title', Unicode, nullable=False)
     charset = Column('charset', String, nullable=True)
-    content = Column('content', UnicodeText)
+    content = Column('content', LargeBinary)
     last_crawled = Column('last_crawled', DateTime)
     spider = Column('spider', String)
 

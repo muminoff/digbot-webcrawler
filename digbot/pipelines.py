@@ -2,6 +2,8 @@ from datetime import datetime
 from sqlalchemy.orm import sessionmaker
 from models import Page, db_connect, create_pages_table
 from scrapy import log
+from base64 import b64encode
+from binascii import hexlify
 
 
 class DigbotPipeline(object):
@@ -16,7 +18,9 @@ class DigbotPipeline(object):
         page.url = item['url']
         page.title = item['title']
         page.charset = item['charset']
-        page.content = item['content']
+        b64_encoded_text = b64encode(item['content'])
+        binary_form = hexlify(b64_encoded_text)
+        page.content = binary_form
         page.last_crawled = datetime.utcnow()
         page.spider = spider.name
 
