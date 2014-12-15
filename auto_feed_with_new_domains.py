@@ -15,10 +15,12 @@ def main():
     r = redis.Redis(connection_pool=pool)
 
     try:
-        print "Getting new domains ..."
+        print "Getting new domains and feeding spiders ..."
         members = r.smembers("digspider:new_domains")
-        for member in members:
-            print member
+        for domain_name in members:
+            print "Adding {} ...".format(domain_name)
+            r.sadd("digspider:domain_whitelist", domain_name)
+            r.lpush("digspider:start_urls", "http://{}/".format(domain_name))
     except Exception, e:
         print "Error feeding spiders!" + str(e)
         sys.exit(-1)
