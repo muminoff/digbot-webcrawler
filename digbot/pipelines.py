@@ -32,5 +32,7 @@ class DigbotPipeline(object):
             log.msg(str(e), level=log.CRITICAL)
         finally:
             session.close()
+            del b64_encoded_text
+            del binary_form
 
         return item
