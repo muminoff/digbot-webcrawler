@@ -17,10 +17,7 @@ class DigbotPipeline(object):
         page = Page()
         page.url = item['url']
         page.title = item['title']
-        page.charset = item['charset']
-        b64_encoded_text = b64encode(item['content'])
-        binary_form = hexlify(b64_encoded_text)
-        page.content = binary_form
+        page.content = item['content']
         page.last_crawled = datetime.utcnow()
         page.spider = spider.name
 
@@ -32,7 +29,5 @@ class DigbotPipeline(object):
             log.msg(str(e), level=log.CRITICAL)
         finally:
             session.close()
-            del b64_encoded_text
-            del binary_form
 
         return item

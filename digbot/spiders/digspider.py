@@ -7,6 +7,7 @@ from digbot import settings
 import scrapy
 import tldextract
 import redis
+from bs4 import BeautifulSoup
 
 
 class DigbotSpider(RedisSpider):
@@ -45,15 +46,17 @@ class DigbotSpider(RedisSpider):
             item['title'] = tldextract.extract(response.url).registered_domain
         
         try:
-            item['content'] = response.body
+            soup = BeautifulSoup(response.body)
+            for unwanted_tag in soup(["title", "script", "style"]):
+                unwanted_tag.extract()
+            clean_text = u' '.join(a for a in soup.get_text().split())
+            item['content'] = clean_text
         except:
-            item['content'] = response.body_as_unicode()
-
-        # FIXME if failure consider following options in try mode
-        # response._body_inferred_encoding()
-        # response._body_declared_encoding()
-        # response._headers_encoding()
-        item['charset'] = response.encoding
+            soup = BeautifulSoup(response.body_as_unicode())
+            for unwanted_tag in soup(["title", "script", "style"]):
+                unwanted_tag.extract()
+            clean_text = u' '.join(a for a in soup.get_text().split())
+            item['content'] = clean_text
 
         yield item
 
