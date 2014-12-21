@@ -27,8 +27,12 @@ class DigbotSpider(RedisSpider):
         domain = tldextract.extract(url).registered_domain
         return r.sismember(self.name + ':domain_whitelist', domain)
 
-    def get_domain(self, url):
-        return tldextract.extract(url).registered_domain
+    def get_domain_fqdn(self, url):
+        ex = tldextract.extract(url)
+        if ex.subdomain is not None:
+            return ex.subdomain + ex.registered_domain
+
+        return ex.registered_domain
 
     def parse(self, response):
         hxs = scrapy.Selector(response)
@@ -64,16 +68,17 @@ class DigbotSpider(RedisSpider):
         new_domains = self.name + ':new_domains'
 
         for link in tld_links:
-            visited_urls = '{}:{}:visited_urls'.format(self.name, self.get_domain(link))
+            this_domain = self.get_domain_fqdn(link)
+            visited_urls = '{}:{}:visited_urls'.format(self.name, this_domain)
             if not r.sismember(visited_urls, link):
                 if self.is_domain_in_white_list(link):
                     scrapy.log.msg('Following link {}'.format(link), level=scrapy.log.INFO)
                     r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
-                    scrapy.log.msg('Domain not in white list {}'.format(link), level=scrapy.log.INFO)
-                    if not r.sismember(new_domains, self.get_domain(link)):
-                        r.sadd(new_domains, self.get_domain(link))
-                        scrapy.log.msg('Found new domain {}'.format(self.get_domain(link)), level=scrapy.log.INFO)
+                    scrapy.log.msg('Domain not in white list {}'.format(this_domain), level=scrapy.log.INFO)
+                    if not r.sismember(new_domains, this_domain):
+                        r.sadd(new_domains, this_domain)
+                        scrapy.log.msg('Found new domain {}'.format(this_domain), level=scrapy.log.INFO)
             else:
                 scrapy.log.msg('Already visited {}'.format(link), level=scrapy.log.INFO)

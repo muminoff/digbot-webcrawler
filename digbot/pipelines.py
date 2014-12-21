@@ -17,7 +17,7 @@ class DigbotPipeline(object):
         page = Page()
         page.url = item['url']
         page.title = item['title']
-        page.content = item['content']
+        page.content = item['content'].encode('utf8')
         page.last_crawled = datetime.utcnow()
         page.spider = spider.name
 
