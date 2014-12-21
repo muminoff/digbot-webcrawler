@@ -12,7 +12,7 @@ LOG_LEVEL = 'CRITICAL'
 # Broad crawler settings recommendation from scrapy authors
 CONCURRENT_REQUESTS = 16
 COOKIES_ENABLED = False
-DOWNLOAD_TIMEOUT = 30
+# DOWNLOAD_TIMEOUT = 30
 # REDIRECT_ENABLED = False
 AJAXCRAWL_ENABLED = True
 
@@ -25,16 +25,16 @@ ITEM_PIPELINES = [
     'digbot.pipelines.DigbotPipeline',
 ]
 
-REDIS_HOST = '10.0.3.42'
+REDIS_HOST = '10.0.1.11'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': '10.0.5.134',
+    'host': '10.0.1.127',
     'port': '5432',
     'username': 'digmaster',
-    'password': 'E/Ar4iLfAOlB/+p68OKyLL0h5sgsZIM0',
+    'password': 'digmaster',
     'database': 'digspider'
 }
