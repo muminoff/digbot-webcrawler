@@ -30,7 +30,7 @@ class DigbotSpider(RedisSpider):
     def get_domain_fqdn(self, url):
         ex = tldextract.extract(url)
         if ex.subdomain is not None:
-            return ex.subdomain + ex.registered_domain
+            return "{}.{}".format(ex.subdomain, ex.registered_domain)
 
         return ex.registered_domain
 
@@ -51,12 +51,9 @@ class DigbotSpider(RedisSpider):
         
         try:
             soup = BeautifulSoup(response.body)
-            for unwanted_tag in soup(["title", "script", "style"]):
-                unwanted_tag.extract()
-            clean_text = u' '.join(a for a in soup.get_text().split())
-            item['content'] = clean_text
         except:
             soup = BeautifulSoup(response.body_as_unicode())
+        finally:
             for unwanted_tag in soup(["title", "script", "style"]):
                 unwanted_tag.extract()
             clean_text = u' '.join(a for a in soup.get_text().split())
