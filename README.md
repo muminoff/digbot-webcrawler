@@ -1,6 +1,6 @@
-# digbot-webcrawler
+# DigBot web-crawler
 
-Web crawler
+`.uz` country code top level domain focused, recursive crawler with clean scraper (with BeautifulSoup)
 
 # Requirements
 
