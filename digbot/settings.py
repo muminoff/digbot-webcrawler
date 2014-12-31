@@ -25,16 +25,16 @@ ITEM_PIPELINES = [
     'digbot.pipelines.DigbotPipeline',
 ]
 
-REDIS_HOST = '10.0.1.11'
+REDIS_HOST = '10.0.1.20'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': '10.0.1.127',
+    'host': '10.0.1.30',
     'port': '5432',
     'username': 'digmaster',
     'password': 'digmaster',
-    'database': 'digspider'
+    'database': 'digdb'
 }
