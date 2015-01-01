@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, Boolean, DateTime, Unicode, UnicodeText
+from sqlalchemy import create_engine, Column, BigInteger, String, Boolean, DateTime, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.engine.url import URL
 import settings
@@ -17,9 +17,9 @@ def create_pages_table(engine):
 class Page(DeclarativeBase):
     __tablename__ = "pages"
 
-    id = Column(Integer, primary_key=True)
-    url = Column('url', Unicode, nullable=False)
-    title = Column('title', Unicode, nullable=False)
+    id = Column(BigInteger, primary_key=True)
+    url = Column('url', String, nullable=False)
+    title = Column('title', String, nullable=False)
     content = Column('content', UnicodeText)
     last_crawled = Column('last_crawled', DateTime)
     spider = Column('spider', String)
