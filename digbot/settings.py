@@ -6,7 +6,7 @@ SPIDER_MODULES = ['digbot.spiders']
 NEWSPIDER_MODULE = 'digbot.spiders'
 
 USER_AGENT = 'DigBot'
-LOG_LEVEL = 'CRITICAL'
+LOG_LEVEL = 'DEBUG'
 # LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
