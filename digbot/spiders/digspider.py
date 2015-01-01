@@ -83,6 +83,7 @@ class DigbotSpider(RedisSpider):
 
         for link in tld_links:
             if self.looks_like_forum_site(link):
+                scrapy.log.msg('Looks like forum site {}'.format(link), level=scrapy.log.INFO)
                 continue
             this_domain = self.get_domain_fqdn(link)
             visited_urls = '{}:{}:visited_urls'.format(self.name, this_domain)
@@ -90,6 +91,7 @@ class DigbotSpider(RedisSpider):
                 if self.is_domain_in_white_list(link):
                     scrapy.log.msg('Following link {}'.format(link), level=scrapy.log.INFO)
                     if not self.in_root_path(link):
+                        scrapy.log.msg('Link is not root {}'.format(link), level=scrapy.log.INFO)
                         r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
