@@ -30,7 +30,9 @@ class DigbotSpider(RedisSpider):
 
     def get_domain_fqdn(self, url):
         ex = tldextract.extract(url)
-        if (ex.subdomain is not None) and (ex.subdomain != ''):
+        empty_subdomain = ex.subdomain == ''
+        subdomain_exists = ex.subdomain != None
+        if subdomain_exists and not empty_subdomain:
             return "{}.{}".format(ex.subdomain, ex.registered_domain)
 
         return ex.registered_domain
