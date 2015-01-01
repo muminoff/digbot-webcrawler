@@ -38,6 +38,17 @@ class DigbotSpider(RedisSpider):
     def in_root_path(url):
         return urlparse(url).path == '/' or urlparse(url).path == ''
 
+    def looks_like_forum_site(url):
+        forum_tags = [
+            'forum',
+        ]
+
+        for tag in forum_tags:
+            if tag in url:
+                return True
+
+        return False
+
     def parse(self, response):
         hxs = scrapy.Selector(response)
         refer_links = self.link_extractor.extract_links(response)
@@ -69,6 +80,8 @@ class DigbotSpider(RedisSpider):
         new_domains = self.name + ':new_domains'
 
         for link in tld_links:
+            if self.looks_like_forum_site(link):
+                continue
             this_domain = self.get_domain_fqdn(link)
             visited_urls = '{}:{}:visited_urls'.format(self.name, this_domain)
             if not r.sismember(visited_urls, link):
