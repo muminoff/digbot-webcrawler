@@ -23,9 +23,16 @@ class DigbotSpider(RedisSpider):
     def is_domestic(self, url):
         return tldextract.extract(url).tld == 'uz'
 
-    def is_domain_in_white_list(self, url):
+    def domain_in_whitelist(self, url):
         r = redis.Redis(connection_pool=self.pool)
-        domain = tldextract.extract(url).registered_domain
+        ex = tldextract.extract(url)
+        empty_subdomain = ex.subdomain == ''
+        subdomain_exists = ex.subdomain != None
+        if subdomain_exists and not empty_subdomain:
+            domain = "{}.{}".format(ex.subdomain, ex.registered_domain)
+        else:
+            domain = ex.registered_domain
+
         return r.sismember(self.name + ':domain_whitelist', domain)
 
     def get_domain_fqdn(self, url):
@@ -37,25 +44,24 @@ class DigbotSpider(RedisSpider):
 
         return ex.registered_domain
 
-    def in_root_path(url):
+    def in_root_path(self, url):
         return urlparse(url).path == '/' or urlparse(url).path == ''
 
-    def looks_like_forum_site(url):
-        forum_tags = [
-            'forum',
-        ]
+    def looks_like_forum(self, url):
+        forum_tags = [ 'forum' ]
+        domain = self.get_domain_fqdn(url)
 
         for tag in forum_tags:
-            if tag in url:
+            if tag in domain:
                 return True
 
         return False
 
     def parse(self, response):
         hxs = scrapy.Selector(response)
-        refer_links = self.link_extractor.extract_links(response)
-        tld_links = [
-            link.url for link in refer_links if self.is_domestic(link.url)
+        extracted_links = self.link_extractor.extract_links(response)
+        page_urls = [
+            link.url for link in extracted_links if self.is_domestic(link.url)
         ]
 
         item = PageItem()
@@ -69,7 +75,8 @@ class DigbotSpider(RedisSpider):
         try:
             soup = BeautifulSoup(response.body)
         except:
-            soup = BeautifulSoup(response.body_as_unicode())
+            soup = hxs.xpath('/html/body/**')
+            scrapy.log.msg('Cannot get response body from {}'.format(response.url), level=scrapy.log.INFO)
         finally:
             for unwanted_tag in soup(["title", "script", "style"]):
                 unwanted_tag.extract()
@@ -80,19 +87,22 @@ class DigbotSpider(RedisSpider):
 
         r = redis.Redis(connection_pool=self.pool)
         new_domains = self.name + ':new_domains'
+        forum_sites = self.name + ':forum_sites'
 
-        for link in tld_links:
-            if self.looks_like_forum_site(link):
-                scrapy.log.msg('Looks like forum site {}'.format(link), level=scrapy.log.INFO)
-                continue
+        for link in page_urls:
             this_domain = self.get_domain_fqdn(link)
             visited_urls = '{}:{}:visited_urls'.format(self.name, this_domain)
+            if self.looks_like_forum(link):
+                scrapy.log.msg('Looks like forum site {}, so ignoring...'.format(link), level=scrapy.log.INFO)
+                if not r.sismember(forum_sites, this_domain):
+                    r.sadd(forum_sites, this_domain)
+                continue
             if not r.sismember(visited_urls, link):
-                if self.is_domain_in_white_list(link):
+                if self.domain_in_whitelist(link):
                     scrapy.log.msg('Following link {}'.format(link), level=scrapy.log.INFO)
-                    # if not self.in_root_path(link):
-                    #     scrapy.log.msg('Link is not root {}'.format(link), level=scrapy.log.INFO)
-                    r.sadd(visited_urls, link)
+                    if not self.in_root_path(link):
+                        scrapy.log.msg('Link is not root {}'.format(link), level=scrapy.log.INFO)
+                        r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
                     scrapy.log.msg('Domain not in white list {}'.format(this_domain), level=scrapy.log.INFO)
