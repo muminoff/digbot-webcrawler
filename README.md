@@ -1,16 +1,17 @@
 # DigBot web-crawler
 
-`.uz` country code top level domain focused, recursive crawler with clean scraper (with BeautifulSoup)
+CCTLD focused, recursive crawler built with Scrapy.
 
 # Requirements
 
 * Python (2.7)
 * Scrapy (0.24.4)
 * scrapy-redis (0.5.2)
+* psycopg2 (2.5.4)
+* SQLAlchemy (0.9.8)
 * redis (2.10.3)
 * tldextract (1.5.1)
-* psycopg2 (2.5.4)
-* beautifulsoup4 (4.3.2)
+* BeautifulSoup4 (4.3.2)
 
 
 # License
@@ -26,14 +27,3 @@ list of conditions and the following disclaimer.
 Redistributions in binary form must reproduce the above copyright notice, this 
 list of conditions and the following disclaimer in the documentation and/or 
 other materials provided with the distribution.
-
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
-ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED 
-WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE 
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE 
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL 
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR 
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER 
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, 
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE 
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
