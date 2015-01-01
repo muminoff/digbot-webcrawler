@@ -90,9 +90,9 @@ class DigbotSpider(RedisSpider):
             if not r.sismember(visited_urls, link):
                 if self.is_domain_in_white_list(link):
                     scrapy.log.msg('Following link {}'.format(link), level=scrapy.log.INFO)
-                    if not self.in_root_path(link):
-                        scrapy.log.msg('Link is not root {}'.format(link), level=scrapy.log.INFO)
-                        r.sadd(visited_urls, link)
+                    # if not self.in_root_path(link):
+                    #     scrapy.log.msg('Link is not root {}'.format(link), level=scrapy.log.INFO)
+                    r.sadd(visited_urls, link)
                     yield scrapy.http.Request(url=link, callback=self.parse)
                 else:
                     scrapy.log.msg('Domain not in white list {}'.format(this_domain), level=scrapy.log.INFO)
