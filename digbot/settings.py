@@ -31,7 +31,7 @@ NEWSPIDER_MODULE = 'digbot.spiders'
 
 # Commented this line, because we use random user agent since we are getting blocked sometimes ;)
 # USER_AGENT = 'DigBot'
-LOG_LEVEL = 'DEBUG'
+LOG_LEVEL = 'ERROR'
 # LOG_FILE = './log/digspider.log'
 
 # Broad crawler settings recommendation from scrapy authors
