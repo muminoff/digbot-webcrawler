@@ -18,7 +18,8 @@ def main():
         domain_name = r.spop('digspider:new_domains')
         try:
             print "Feeding spiders with {} ...".format(domain_name)
-            r.sadd("digspider:domain_whitelist", domain_name)
+            if not r.sismember("digspider:domain_whitelist", domain_name):
+                r.sadd("digspider:domain_whitelist", domain_name)
             r.lpush("digspider:start_urls", "http://{}/".format(domain_name))
         except:
             print "Error feeding spiders with {}!".format(domain_name)
