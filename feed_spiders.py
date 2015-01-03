@@ -7,29 +7,24 @@ from digbot import settings
 
 
 def main():
-    if len(sys.argv) < 2:
-        print "Usage {} domain.uz".format(sys.argv[0])
-        sys.exit(0)
-
-    domain_name = sys.argv[1]
-
     pool = redis.ConnectionPool(
-        host=settings.REDIS_HOST,
-        port=settings.REDIS_PORT,
-        db=settings.REDIS_DB
+        host='54.172.139.99',
+        port=6379,
+        db=0
     )
     r = redis.Redis(connection_pool=pool)
 
-    try:
-        print "Feeding spiders with {} ...".format(domain_name)
-        r.sadd("digspider:domain_whitelist", domain_name)
-        r.lpush("digspider:start_urls", "http://{}/".format(domain_name))
-    except:
-        print "Error feeding spiders!"
-        sys.exit(-1)
-
-    print "Done"
-
+    for x in xrange(1, 11):
+        domain_name = r.spop('digspider:new_domains')
+        try:
+            print "Feeding spiders with {} ...".format(domain_name)
+            r.sadd("digspider:domain_whitelist", domain_name)
+            r.lpush("digspider:start_urls", "http://{}/".format(domain_name))
+        except:
+            print "Error feeding spiders with {}!".format(domain_name)
+            print "Adding {} back to records ...".format(domain_name)
+            r.sadd("digspider:new_domains", domain_name)
+            break
 
 if __name__ == '__main__':
     main()
