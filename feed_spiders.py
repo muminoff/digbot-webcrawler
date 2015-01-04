@@ -15,7 +15,7 @@ def main():
     r = redis.Redis(connection_pool=pool)
 
     for x in xrange(1, 11):
-        domain_name = r.spop('digspider:new_domains')
+        domain_name = r.srandmember('digspider:new_domains')
         try:
             print "Feeding spiders with {} ...".format(domain_name)
             if not r.sismember("digspider:domain_whitelist", domain_name):
