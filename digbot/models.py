@@ -3,6 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.engine.url import URL
 import settings
 
+from sqlalchemy.dialects import postgresql
+
 
 DeclarativeBase = declarative_base()
 
@@ -21,15 +23,15 @@ class Page(DeclarativeBase):
     url = Column('url', String, nullable=False)
     title = Column('title', String, nullable=False)
     content = Column('content', UnicodeText)
-    last_crawled = Column('last_crawled', DateTime)
     spider = Column('spider', String)
+    last_crawled = Column('last_crawled', DateTime)
 
 
 class Domain(DeclarativeBase):
     __tablename__ = "domains"
 
     fqdn = Column('title', String, primary_key=True)
-    ip_address = Column('ip_address', String, nullable=False)
+    ip_address = Column('ip_address', postgresql.INET, nullable=False)
     tasix_member = Column('tasix_member', Boolean, unique=False, default=False)
     last_crawled = Column('last_crawled', DateTime)
     spider = Column('spider', String)
