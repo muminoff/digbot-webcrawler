@@ -1,25 +1,27 @@
 # -*- coding: utf-8 -*-
 import socket
 
-def is_production():
-    return socket.gethostname() != 'blacksmith'
+
+# def is_production():
+#     return socket.gethostname() != 'blacksmith'
+
 
 def get_postgre_settings():
-    if is_production():
-        return {
-            'drivername': 'postgres',
-            'host': '10.0.1.30',
-            'port': '5432',
-            'username': 'digmaster',
-            'password': 'digmaster',
-            'database': 'digdb'
-        }
+    # if is_production():
+    #     return {
+    #         'drivername': 'postgres',
+    #         'host': '10.0.1.30',
+    #         'port': '5432',
+    #         'username': 'digmaster',
+    #         'password': 'digmaster',
+    #         'database': 'digdb'
+    #     }
 
     return {
         'drivername': 'postgres',
         'host': '127.0.0.1',
         'port': '5432',
-        'username': 'muminoff',
+        'username': 'diguser',
         'password': '',
         'database': 'digdb'
     }
@@ -30,9 +32,10 @@ SPIDER_MODULES = ['digbot.spiders']
 NEWSPIDER_MODULE = 'digbot.spiders'
 
 # Commented this line, because we use random user agent since we are getting blocked sometimes ;)
-# USER_AGENT = 'DigBot'
-LOG_LEVEL = 'ERROR'
+USER_AGENT = 'DigBot'
+LOG_LEVEL = 'DEBUG'
 # LOG_FILE = './log/digspider.log'
+LOG_STDOUT = True
 
 # Broad crawler settings recommendation from scrapy authors
 CONCURRENT_REQUESTS = 16
@@ -43,12 +46,12 @@ DOWNLOAD_TIMEOUT = 30
 # REDIRECT_ENABLED = False
 AJAXCRAWL_ENABLED = True
 
-SCHEDULER = "scrapy_redis.scheduler.Scheduler" 
-SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue' 
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_QUEUE_CLASS = 'scrapy_redis.queue.SpiderQueue'
 SCHEDULER_IDLE_BEFORE_CLOSE = 10
 
 ITEM_PIPELINES = {
-    'digbot.pipelines.DigbotPipeline':300,
+    'digbot.pipelines.DigbotPipeline': 300,
 }
 
 USER_AGENT_LIST = [
@@ -66,7 +69,7 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 
-REDIS_HOST = '10.0.1.20' if is_production() else '127.0.0.1'
+REDIS_HOST = '127.0.0.1'
 REDIS_PORT = 6379
 REDIS_DB = 0
 
