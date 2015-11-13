@@ -1,21 +1,19 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import time
 import redis
-import sys
-from digbot import settings
 
 
 def main():
     pool = redis.ConnectionPool(
-        host='54.172.139.99',
-        port=6379,
+        host='192.168.99.100',
+        port=32774,
         db=0
     )
     r = redis.Redis(connection_pool=pool)
 
     for x in xrange(1, 11):
         domain_name = r.srandmember('digspider:new_domains')
+        r.srem('digspider:newdomains', domain_name)
         try:
             print "Feeding spiders with {} ...".format(domain_name)
             if not r.sismember("digspider:domain_whitelist", domain_name):

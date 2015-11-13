@@ -1,0 +1,27 @@
+db:
+  expose:
+    - "5432"
+  ports:
+    - "5432"
+  image: sameersbn/postgresql:9.4-7
+  environment:
+      DB_USER: diguser
+      DB_PASS: diguser
+      DB_NAME: digdb
+      PG_DATA_DIR: /data
+  volumes:
+      - data:/data
+qm:
+  ports:
+    - "6379"
+  image: redis
+sp:
+  build: .
+  command: scrapy crawl digspider
+  volumes:
+    - .:/dig
+  ports:
+    - "6023"
+  links:
+    - db
+    - qm

@@ -12,6 +12,7 @@ DeclarativeBase = declarative_base()
 def db_connect():
     return create_engine(URL(**settings.DATABASE), client_encoding='utf8')
 
+
 def create_pages_table(engine):
     DeclarativeBase.metadata.create_all(engine)
 
