@@ -40,15 +40,15 @@ DOWNLOADER_MIDDLEWARES = {
 }
 
 
-REDIS_HOST = os.environ.get('DIGBOTWEBCRAWLER_QM_1_PORT_6379_TCP_ADDR', '127.0.0.1')
-REDIS_PORT = os.environ.get('DIGBOTWEBCRAWLER_QM_1_PORT_6379_TCP_PORT', 6379)
-REDIS_DB = os.environ.get('DIGBOTWEBCRAWLER_QM_1_DB', 0)
+REDIS_HOST = os.environ.get('SCRAPPER_QM_1_PORT_6379_TCP_ADDR', '127.0.0.1')
+REDIS_PORT = os.environ.get('SCRAPPER_QM_1_PORT_6379_TCP_PORT', 6379)
+REDIS_DB = os.environ.get('SCRAPPER_QM_1_DB', 0)
 
 DATABASE = {
     'drivername': 'postgres',
-    'host': os.environ.get('DIGBOTWEBCRAWLER_DB_1_PORT_5432_TCP_ADDR', '127.0.0.1'),
-    'port': os.environ.get('DIGBOTWEBCRAWLER_DB_1_PORT_5432_TCP_PORT', 5432),
-    'username': os.environ.get('DIGBOTWEBCRAWLER_DB_1_ENV_DB_USER', 'diguser'),
-    'password': os.environ.get('DIGBOTWEBCRAWLER_DB_1_ENV_DB_PASS', 'diguser'),
-    'database': os.environ.get('DIGBOTWEBCRAWLER_DB_1_ENV_DB_NAME', 'digdb')
+    'host': os.environ.get('SCRAPPER_DB_1_PORT_5432_TCP_ADDR', '127.0.0.1'),
+    'port': os.environ.get('SCRAPPER_DB_1_PORT_5432_TCP_PORT', 5432),
+    'username': os.environ.get('SCRAPPER_DB_1_ENV_DB_USER', 'diguser'),
+    'password': os.environ.get('SCRAPPER_DB_1_ENV_DB_PASS', 'diguser'),
+    'database': os.environ.get('SCRAPPER_DB_1_ENV_DB_NAME', 'digdb')
 }
